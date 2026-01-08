@@ -31,28 +31,66 @@ public class ParkingAppUI {
         printMenu();
         String input = IO.readln();
         while (!input.equalsIgnoreCase("exit")) {
-            try {
-                int spotId = Integer.parseInt(input);
-                ParkingSpot spot = parkingSpotDao.findBySpotNumber(spotId).orElse(null);
-                if (spot != null) {
-                    if (!spot.isOccupied()) {
-                        spot.occupy();
-                        registerParkingSpot(spot);
-                        System.out.println("You have occupied parking spot ID: " + spotId);
-                    } else {
-                        System.out.println("Parking spot ID: " + spotId + " is already occupied.");
-                    }
-                } else {
-                    System.out.println("Parking spot ID: " + spotId + " does not exist.");
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Please enter a valid parking spot ID or 'exit' to quit.");
+            switch (input){
+                case "1":
+                    reserveParkingSpot();
+                    break;
+                case "2":
+                    removeParkingSpot();
+                    break;
+                default:
+                    System.out.println("Invalid option. Please try again.");
             }
+            //reserveParkingSpot();
             printParkingSpots();
-            System.out.println("Enter parking spot ID to occupy or 'exit' to quit:");
+            printMenu();
             input = IO.readln();
         }
         System.out.println("Thank you for using the Parking App. Goodbye!");
+    }
+
+    private void removeParkingSpot() {
+        System.out.println("You chose to move your car.");
+        System.out.println("Enter parking spot ID to vacate:");
+        String input = IO.readln();
+        try {
+            int spotId = Integer.parseInt(input);
+            ParkingSpot spot = parkingSpotDao.findBySpotNumber(spotId).orElse(null);
+            if (spot != null) {
+                if (spot.isOccupied()) {
+                    spot.vacate();
+                    System.out.println("You have vacated parking spot ID: " + spotId);
+                } else {
+                    System.out.println("Parking spot ID: " + spotId + " is already available.");
+                }
+            } else {
+                System.out.println("Parking spot ID: " + spotId + " does not exist.");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input. Please enter a valid parking spot ID or 'exit' to quit.");
+        }
+    }
+
+    private void reserveParkingSpot( ) {
+        try {
+            System.out.println("You chose to park today. Enter parking spot ID:");
+            String input = IO.readln();
+            int spotId = Integer.parseInt(input);
+            ParkingSpot spot = parkingSpotDao.findBySpotNumber(spotId).orElse(null);
+            if (spot != null) {
+                if (!spot.isOccupied()) {
+                    spot.occupy();
+                    registerParkingSpot(spot);
+                    System.out.println("You have occupied parking spot ID: " + spotId);
+                } else {
+                    System.out.println("Parking spot ID: " + spotId + " is already occupied.");
+                }
+            } else {
+                System.out.println("Parking spot ID: " + spotId + " does not exist.");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input. Please enter a valid parking spot ID or 'exit' to quit.");
+        }
     }
 
     private void registerParkingSpot(ParkingSpot spot) {
@@ -73,9 +111,10 @@ public class ParkingAppUI {
 
     private void printMenu() {
         System.out.println("Parking App is running...");
-        System.out.println("Where do you want to park today?");
+        System.out.println("1- Where do you want to park today?");
+        System.out.println("2- would you move your car?");
         System.out.println("=============================");
-        System.out.println("Enter parking spot ID to occupy or 'exit' to quit:");
+        System.out.println("Chose an option or 'exit' to quit:");
     }
 
     private void printParkingSpots() {
