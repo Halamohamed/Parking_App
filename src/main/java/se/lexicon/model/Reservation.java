@@ -16,7 +16,7 @@ public class Reservation {
     public Reservation(ParkingSpot parkingSpot, Customer customer, int hours){
         this.reservationId = "RES-" + (new Random().nextInt(900000) + 1000000);
         this.startTime = LocalDateTime.now();
-        serDurationInHours(hours);
+        setDurationInHours(hours);
         this.parkingSpot = Objects.requireNonNull(parkingSpot, "Parking spot cannot be null");
         this.customer = Objects.requireNonNull(customer, "Customer cannot be null");
         this.status = Status.ACTIVE;
@@ -53,7 +53,7 @@ public class Reservation {
     }
 
 
-    public void serDurationInHours(int hours){
+    public void setDurationInHours(int hours){
         if (hours <= 0) {
             throw new IllegalArgumentException("Duration must be positive");
         }

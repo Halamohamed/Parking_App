@@ -10,7 +10,13 @@ import java.util.List;
 public class Main {
 
     void main() {
-        List<ParkingSpot> parkingSpots = new ArrayList<>();
+
+        ParkingAppUI parkingAppUI = new ParkingAppUI();
+        parkingAppUI.run();
+
+
+
+      /*  List<ParkingSpot> parkingSpots = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             parkingSpots.add(new ParkingSpot(i, 101));
         }
@@ -76,6 +82,6 @@ public class Main {
         }
         IO.println("└───────┴───────┴───────┴───────┴───────┘");
 
-
+*/
     }
 }
