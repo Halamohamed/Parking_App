@@ -7,18 +7,26 @@ import se.lexicon.model.Reservation;
 
 import static java.lang.IO.*;
 
+/**
+ * Console based UI for Parking App
+ */
 public class ParkingAppUI {
     private ReservationDao reservationDao;
     private ParkingSpotDao parkingSpotDao;
     private CustomerDao customerDao;
 
-
+    /**
+     * Constructor initializes DAOs
+     */
     public ParkingAppUI() {
         this.reservationDao = new ReservationDaoImp();
         this.parkingSpotDao = new ParkingSpotDaoImp();
         this.customerDao = new CustomerDaoImp();
     }
 
+    /**
+     * Runs the Parking App UI
+     */
     public void run() {
         System.out.println("Welcome to the Parking App!");
         for (int i = 1; i <= 10; i++) {
@@ -41,7 +49,6 @@ public class ParkingAppUI {
                 default:
                     System.out.println("Invalid option. Please try again.");
             }
-            //reserveParkingSpot();
             printParkingSpots();
             printMenu();
             input = IO.readln();
@@ -49,6 +56,9 @@ public class ParkingAppUI {
         System.out.println("Thank you for using the Parking App. Goodbye!");
     }
 
+    /**
+     * Removes a parking spot (vacates it)
+     */
     private void removeParkingSpot() {
         System.out.println("You chose to move your car.");
         System.out.println("Enter parking spot ID to vacate:");
@@ -71,6 +81,9 @@ public class ParkingAppUI {
         }
     }
 
+    /**
+     * Reserves a parking spot
+     */
     private void reserveParkingSpot( ) {
         try {
             System.out.println("You chose to park today. Enter parking spot ID:");
@@ -93,6 +106,10 @@ public class ParkingAppUI {
         }
     }
 
+    /**
+     * Registers a parking spot to a customer
+     * @param spot
+     */
     private void registerParkingSpot(ParkingSpot spot) {
         System.out.println("Registering parking spot ID: " + spot.getId());
         System.out.print("Enter your name: ");
@@ -109,14 +126,20 @@ public class ParkingAppUI {
         System.out.println(reservationDao.findAll().stream().toList().get(reservationDao.findAll().size() - 1));
     }
 
+    /**
+     * Prints the main menu
+     */
     private void printMenu() {
         System.out.println("Parking App is running...");
         System.out.println("1- Where do you want to park today?");
         System.out.println("2- would you move your car?");
         System.out.println("=============================");
-        System.out.println("Chose an option or 'exit' to quit:");
+        System.out.println("Chose an option or type 'exit' to quit:");
     }
 
+    /**
+     * Prints the parking spots in a formatted manner
+     */
     private void printParkingSpots() {
         // Display all spots in Area 101 like a real parking place with lines
         println("\n=== Parking Lot - Area 101 ===");
